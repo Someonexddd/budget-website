@@ -4,7 +4,7 @@ import Link from "next/link";
 
 async function Budgets() {
   return(
-    <div className="flex flex-wra gap-4">
+    <div className="flex flex-wra gap-4 justify-center items-center text-4xl font-bold">
       Test
     </div>
   )
