@@ -1,24 +1,21 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { Progress } from "~/components/ui/progress";
+import { Button } from "~/components/ui/button";
+import { Budgets } from "./_components/budgets";
 
+export const dynamic = "force-dynamic";
 
-async function Budgets() {
-  return(
-    <div className="flex flex-wrap gap-4 justify-center items-center text-4xl font-bold">
-      Test
-      <Progress value={50}/>
-    </div>
-  )
-}
 
 export default function HomePage() {
+
   return (
-    <main className="p-4">
+    <main className="p-6">
       <SignedOut>
         <div className="h-full w-full text-2xl text-center">Please sign in above</div>
       </SignedOut>
       <SignedIn>
         <Budgets />
+
+        
       </SignedIn>
     </main>
   );
