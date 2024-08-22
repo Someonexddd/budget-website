@@ -24,12 +24,13 @@ export async function getMyExpenseCategories() {
   if (!user.userId) throw new Error("Unauthorized");
 
   const expenseCategories = await db.query.ExpenseCategories.findMany({
-    where: (expenseCategory, { eq }) => eq(expenseCategory.budgetid, budgets.id),
     orderBy: (expenseCategory, { desc }) => desc(expenseCategory.id),
   });
 
   return expenseCategories;
 } 
+
+
 
 export async function getMyExpenses() {
   const user = auth();
@@ -42,4 +43,17 @@ export async function getMyExpenses() {
   });
 
   return expenses;
+}
+
+export async function getMyIncomeCategories() {
+  const user = auth();
+
+  if (!user.userId) throw new Error("Unauthorized");
+
+  const incomeCategories = await db.query.incomeCategories.findMany({
+    where: (incomeCategory, { eq }) => eq(incomeCategory.budgetid, budgets.id),
+    orderBy: (incomeCategory, { desc }) => desc(incomeCategory.id),
+  });
+
+  return incomeCategories;
 }

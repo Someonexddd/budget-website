@@ -21,6 +21,16 @@ export const budgets = createTable("budgets", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
     () => new Date()
   ),
+  resetDay: varchar("reset_day", { length: 256 }),
+});
+
+export const incomeCategories = createTable("incomeCategories", {
+  id: serial("id").primaryKey(),
+  budgetid: serial("budget_id")
+  .references(() => budgets.id)
+  .notNull(),
+  name: varchar("name", { length: 256 }).notNull(),
+  amount: numeric("amount").notNull(),
 });
 
 
@@ -40,4 +50,5 @@ export const Expenses = createTable("Expenses", {
   .notNull(),
   name: varchar("name", { length: 256 }).notNull(),
   amount: numeric("amount").notNull(),
+  url: varchar("url", { length: 1024 }),
 });
