@@ -7,6 +7,10 @@ import * as z from "zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
+import { useRouter } from "next/navigation";
+
+
+
 
 interface DialogBudgetProps {
     budgetId: number;
@@ -18,29 +22,10 @@ const formSchema = z.object({
     budgetId: z.number(),
 });
 
-// Update the handleSubmit function to include the budgetId
-const handleSubmit = async (data: z.infer<typeof formSchema>) => {
-    try {
-        const formData = new FormData();
-        formData.append("name", data.name);
-        formData.append("amount", data.amount.toString());
-        formData.append("budgetId", data.budgetId.toString()); // Use data.budgetId directly
 
-        const res = await fetch("/api/form", {
-            method: "POST",
-            body: formData,
-        });
-        if (res.ok) {
-            console.log("Form submitted successfully");
-        } else {
-            console.error("Failed to submit form");
-        }
-    } catch (error) {
-        console.error("Error submitting form:", error);
-    }
-};
 
 export function DialogBudget({ budgetId }: DialogBudgetProps) {
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -50,6 +35,27 @@ export function DialogBudget({ budgetId }: DialogBudgetProps) {
         },
     });
 
+    // Update the handleSubmit function to include the budgetId
+    const handleSubmit = async (data: z.infer<typeof formSchema>) => {
+        try {
+            const formData = new FormData();
+            formData.append("name", data.name);
+            formData.append("amount", data.amount.toString());
+            formData.append("budgetId", data.budgetId.toString()); // Use data.budgetId directly
+
+            const res = await fetch("/api/form", {
+                method: "POST",
+                body: formData,
+            });
+            if (res.ok) {
+                console.log("Form submitted successfully");
+            } else {
+                console.error("Failed to submit form");
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+        }
+    };
     return (
         <div className="pt-1">
             <Dialog>
