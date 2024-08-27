@@ -1,6 +1,7 @@
 import { getMyExpenseCategories, getMyExpenses } from "~/server/queries";
 import { Progress } from "~/components/ui/progress";
 import { DialogBudget } from "./dialog";
+export const dynamic = "force-dynamic";
 
 
 type budgetType = {
